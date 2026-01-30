@@ -4,58 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HandyBill — Invoice in Seconds</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1E3A5F; color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-  h1 { font-size: 3em; margin-bottom: 10px; }
-  .tagline { font-size: 1.3em; opacity: 0.9; margin-bottom: 40px; }
-  .features { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; max-width: 800px; }
-  .feature { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; width: 200px; }
-  .feature .icon { font-size: 2em; margin-bottom: 10px; }
-  .feature h3 { font-size: 1em; margin-bottom: 5px; }
-  .feature p { font-size: 0.85em; opacity: 0.8; }
-  .cta { background: #48BB78; color: white; padding: 16px 40px; border-radius: 12px; font-size: 1.2em; font-weight: 600; text-decoration: none; display: inline-block; margin-bottom: 30px; transition: transform 0.2s; }
-  .cta:hover { transform: scale(1.05); }
-  .links { margin-top: 40px; opacity: 0.6; font-size: 0.85em; }
-  .links a { color: white; margin: 0 15px; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #0a0f1c; color: white; overflow-x: hidden; }
+  
+  /* Hero */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; position: relative; }
+  .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%, rgba(59,130,246,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(16,185,129,0.1) 0%, transparent 50%); }
+  
+  .badge { display: inline-block; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #60a5fa; padding: 8px 20px; border-radius: 50px; font-size: 0.85em; font-weight: 500; margin-bottom: 30px; position: relative; }
+  
+  h1 { font-size: clamp(2.5em, 6vw, 4.5em); font-weight: 800; line-height: 1.1; margin-bottom: 20px; position: relative; }
+  h1 span { background: linear-gradient(135deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  
+  .subtitle { font-size: clamp(1.1em, 2.5vw, 1.4em); color: #94a3b8; max-width: 600px; line-height: 1.6; margin-bottom: 40px; position: relative; }
+  
+  .cta-group { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; position: relative; margin-bottom: 60px; }
+  .cta-primary { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 16px 36px; border-radius: 14px; font-size: 1.05em; font-weight: 600; text-decoration: none; transition: all 0.3s; box-shadow: 0 4px 20px rgba(59,130,246,0.4); }
+  .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.5); }
+  .cta-secondary { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 16px 36px; border-radius: 14px; font-size: 1.05em; font-weight: 500; text-decoration: none; transition: all 0.3s; }
+  .cta-secondary:hover { background: rgba(255,255,255,0.1); }
+  
+  /* Features */
+  .features { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+  .features h2 { text-align: center; font-size: 2.2em; font-weight: 700; margin-bottom: 12px; }
+  .features .sub { text-align: center; color: #64748b; font-size: 1.1em; margin-bottom: 60px; }
+  
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card { background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 32px; transition: all 0.3s; }
+  .card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .card .icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; margin-bottom: 20px; }
+  .card h3 { font-size: 1.15em; font-weight: 600; margin-bottom: 8px; }
+  .card p { color: #94a3b8; font-size: 0.95em; line-height: 1.6; }
+  
+  .icon-blue { background: rgba(59,130,246,0.15); }
+  .icon-green { background: rgba(16,185,129,0.15); }
+  .icon-purple { background: rgba(139,92,246,0.15); }
+  .icon-orange { background: rgba(249,115,22,0.15); }
+  .icon-pink { background: rgba(236,72,153,0.15); }
+  .icon-cyan { background: rgba(6,182,212,0.15); }
+  
+  /* Stats */
+  .stats { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); margin: 40px 0; }
+  .stat { text-align: center; }
+  .stat .num { font-size: 2.5em; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat .label { color: #64748b; font-size: 0.9em; margin-top: 4px; }
+  
+  /* Footer */
+  footer { text-align: center; padding: 40px 20px; color: #475569; font-size: 0.85em; }
+  footer a { color: #64748b; text-decoration: none; margin: 0 12px; }
+  footer a:hover { color: white; }
 </style>
 </head>
 <body>
 
-<h1>🔧 HandyBill</h1>
-<p class="tagline">Invoice in seconds. Get paid faster.</p>
+<section class="hero">
+  <div class="badge">🔧 Built for handymen & contractors</div>
+  <h1>Invoice in seconds.<br><span>Get paid faster.</span></h1>
+  <p class="subtitle">The all-in-one app for creating professional invoices, tracking expenses, and logging mileage — designed for independent contractors.</p>
+  <div class="cta-group">
+    <a href="#" class="cta-primary">Download Free</a>
+    <a href="#features" class="cta-secondary">See Features →</a>
+  </div>
+</section>
 
-<div class="features">
-  <div class="feature">
-    <div class="icon">📄</div>
-    <h3>Pro Invoices</h3>
-    <p>Create & send PDF invoices in 30 seconds</p>
-  </div>
-  <div class="feature">
-    <div class="icon">💰</div>
-    <h3>Payment Links</h3>
-    <p>PayPal, Venmo, Zelle right on the invoice</p>
-  </div>
-  <div class="feature">
-    <div class="icon">🚗</div>
-    <h3>Mileage GPS</h3>
-    <p>Track trips, auto-calculate IRS deductions</p>
-  </div>
-  <div class="feature">
-    <div class="icon">📊</div>
-    <h3>Tax Export</h3>
-    <p>One-tap export for your accountant</p>
-  </div>
+<div class="stats">
+  <div class="stat"><div class="num">30s</div><div class="label">To create an invoice</div></div>
+  <div class="stat"><div class="num">$0</div><div class="label">No fees ever</div></div>
+  <div class="stat"><div class="num">$9K+</div><div class="label">Avg. mileage deductions/yr</div></div>
 </div>
 
-<a href="#" class="cta">Download Free on Google Play</a>
-<p style="opacity: 0.7; font-size: 0.9em;">100% free. No hidden fees.</p>
+<section class="features" id="features">
+  <h2>Everything you need</h2>
+  <p class="sub">Stop juggling apps. HandyBill does it all.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="icon icon-blue">📄</div>
+      <h3>Professional Invoices</h3>
+      <p>Beautiful PDF invoices with your business info, line items, tax, and payment terms. Send via text, email, or WhatsApp.</p>
+    </div>
+    <div class="card">
+      <div class="icon icon-green">💰</div>
+      <h3>Payment Links</h3>
+      <p>Add PayPal, Venmo, Zelle, or Cash App links right on the invoice. Clients tap and pay — no chasing.</p>
+    </div>
+    <div class="card">
+      <div class="icon icon-purple">🚗</div>
+      <h3>GPS Mileage Tracking</h3>
+      <p>Tap to track your drive. IRS deduction calculated automatically. Never miss a mile at tax time.</p>
+    </div>
+    <div class="card">
+      <div class="icon icon-orange">🧾</div>
+      <h3>Expense Tracking</h3>
+      <p>Snap a receipt photo, pick a tax category, done. All organized for your accountant.</p>
+    </div>
+    <div class="card">
+      <div class="icon icon-pink">📊</div>
+      <h3>Reports & Charts</h3>
+      <p>Monthly income, expenses breakdown, top clients. See how your business is doing at a glance.</p>
+    </div>
+    <div class="card">
+      <div class="icon icon-cyan">📦</div>
+      <h3>One-Tap Tax Export</h3>
+      <p>Export everything as a ZIP file. Invoices, expenses, mileage — ready for your accountant.</p>
+    </div>
+  </div>
+</section>
 
-<div class="links">
-  <a href="/privacy.html">Privacy Policy</a>
-  <a href="/terms.html">Terms of Service</a>
+<footer>
+  <p style="margin-bottom: 16px;">© 2026 HandyBill. All rights reserved.</p>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="terms.html">Terms of Service</a>
   <a href="mailto:handybill.app@proton.me">Contact</a>
-</div>
+</footer>
 
 </body>
 </html>
